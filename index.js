@@ -10,7 +10,7 @@ module.exports = function(err, data, pkgPath) {
     }
 
     if (!data.length) {
-        return `(+) Zero Vulnerabilities Found`;
+        return `:sunny: Zero Known Vulnerabilities Found`;
     }
 
     return format(data);
@@ -20,11 +20,11 @@ function format(data) {
     const tableData = [header];
     const rows = data.map((advisory) => {
         return [
-            advisory.module,
+            `*${advisory.module}*`,
             advisory.vulnerable_versions,
             advisory.patched_versions,
             `<${advisory.advisory}|${advisory.id}>`,
-            `\n_${advisory.path.join('>')}_`
+            `\n_${pathBuilder(advisory.path)}_`
         ];
     });
 
@@ -36,4 +36,8 @@ function format(data) {
           return string.length;
         }
     });
+}
+
+function pathBuilder(path){
+  return `${path[0]} > (${path.length-2} deps) > ${path[path.length-1]}`
 }

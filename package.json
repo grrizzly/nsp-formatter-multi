@@ -1,6 +1,6 @@
 {
     "name": "nsp-formatter-slack",
-    "version": "0.0.3",
+    "version": "0.0.7",
     "description": "minimal slack markup for nsp",
     "main": "index.js",
     "engines": {
