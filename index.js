@@ -5,7 +5,6 @@ var table = require('text-table');
 const header = ['*Package*', '*Version*', '*FixedIn*', '*Advisory*'];
 
 module.exports = function(err, data, pkgPath) {
-    console.log(err, data, pkgPath)
     if (err) {
         return 'Debug output: ' + JSON.stringify(Buffer.isBuffer(data) ? data.toString() : data) + '\n' + err;
     }
