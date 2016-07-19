@@ -1,0 +1,32 @@
+{
+    "name": "nsp-formatter-slack",
+    "version": "0.0.2",
+    "description": "minimal slack markup for nsp",
+    "main": "index.js",
+    "engines": {
+        "node": ">=0.10"
+    },
+    "scripts": {
+        "nsp": "nsp check"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/awolden/nsp-formatter-slack.git"
+    },
+    "keywords": [
+        "nsp",
+        "formatter",
+        "minimal"
+    ],
+    "author": {
+        "name": "Alexander Wolden",
+        "email": "awolden@gmail.com"
+    },
+    "license": "Apache-2.0",
+    "devDependencies": {
+        "nsp": ">=2.5.0"
+    },
+    "dependencies": {
+        "text-table": "^0.2.0"
+    }
+}
