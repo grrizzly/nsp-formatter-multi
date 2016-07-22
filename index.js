@@ -2,7 +2,7 @@
 
 const table = require('text-table');
 const fs = require('fs');
-const nspDefaultOutput = require('nsp/lib/formatters/defaul');
+const nspDefaultOutput = require('nsp/lib/formatters/default');
 
 const header = ['*Package*', '*Version*', '*FixedIn*', '*Advisory*'];
 

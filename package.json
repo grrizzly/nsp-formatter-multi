@@ -1,6 +1,6 @@
 {
     "name": "nsp-formatter-multi",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Outputs a file for slack, reporting and outputs default NSP report",
     "main": "index.js",
     "engines": {
@@ -23,9 +23,6 @@
         "email": "awolden@gmail.com"
     },
     "license": "Apache-2.0",
-    "devDependencies": {
-        "nsp": ">=2.5.0"
-    },
     "dependencies": {
         "nsp": "^2.6.1",
         "text-table": "^0.2.0"
