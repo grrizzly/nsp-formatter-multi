@@ -1,17 +1,17 @@
 {
-    "name": "nsp-formatter-slack",
+    "name": "nsp-formatter-multi",
     "version": "0.0.7",
-    "description": "minimal slack markup for nsp",
+    "description": "Outputs a file for slack, reporting and outputs default NSP report",
     "main": "index.js",
     "engines": {
-        "node": ">=0.10"
+        "node": ">=4"
     },
     "scripts": {
         "nsp": "nsp check"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/awolden/nsp-formatter-slack.git"
+        "url": "git+https://github.com/awolden/nsp-formatter-multi.git"
     },
     "keywords": [
         "nsp",
@@ -27,6 +27,7 @@
         "nsp": ">=2.5.0"
     },
     "dependencies": {
+        "nsp": "^2.6.1",
         "text-table": "^0.2.0"
     }
 }

@@ -1,6 +1,8 @@
 'use strict';
 
-var table = require('text-table');
+const table = require('text-table');
+const fs = require('fs');
+const nspDefaultOutput = require('nsp/lib/formatters/defaul');
 
 const header = ['*Package*', '*Version*', '*FixedIn*', '*Advisory*'];
 
@@ -13,10 +15,12 @@ module.exports = function(err, data, pkgPath) {
         return `:sunny: Zero Known Vulnerabilities Found`;
     }
 
-    return format(data);
+    writeFormatted(data);
+    writeRaw(data);
+    return nspDefaultOutput(err, data, pkgPath);
 };
 
-function format(data) {
+function writeFormatted(data) {
     const tableData = [header];
     const rows = data.map((advisory) => {
         return [
@@ -29,15 +33,20 @@ function format(data) {
     });
 
     const fullTable = tableData.concat(rows);
-    return table(fullTable, {
+    const formattedTable = table(fullTable, {
         hsep: ' ',
         stringLength: (string) => {
-          string = string.replace(/\*(\w*)\*/g, '$1');
-          return string.length;
+            string = string.replace(/\*(\w*)\*/g, '$1');
+            return string.length;
         }
     });
+    return fs.writeFileSync('slack-formatted', formattedTable);
 }
 
-function pathBuilder(path){
-  return `${path[0]} > (${path.length-2} deps) > ${path[path.length-1]}`
+function writeRaw(data) {
+    return fs.writeFileSync('nsp-audit.json', JSON.stringify(data));
+}
+
+function pathBuilder(path) {
+    return `${path[0]} > (${path.length-2} deps) > ${path[path.length-1]}`
 }
