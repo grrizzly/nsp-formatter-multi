@@ -1,6 +1,6 @@
 {
     "name": "nsp-formatter-multi",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "Outputs a file for slack, reporting and outputs default NSP report",
     "main": "index.js",
     "engines": {

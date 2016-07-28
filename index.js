@@ -12,10 +12,11 @@ module.exports = function(err, data, pkgPath) {
     }
 
     if (!data.length) {
-        return `:sunny: Zero Known Vulnerabilities Found`;
+      fs.writeFileSync('slack-formatted', ':sunny: Zero Known Vulnerabilities Found');
+    }else{
+      writeFormatted(data);
     }
 
-    writeFormatted(data);
     writeRaw(data);
     return nspDefaultOutput(err, data, pkgPath);
 };
