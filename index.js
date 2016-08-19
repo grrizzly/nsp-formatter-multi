@@ -3,8 +3,6 @@
 const fs = require('fs');
 const nspDefaultOutput = require('nsp/lib/formatters/default');
 
-const header = ['Package', 'Version', 'FixedIn', 'Advisory'];
-
 module.exports = function(err, data, pkgPath) {
     if (err) {
         return 'Debug output: ' + JSON.stringify(Buffer.isBuffer(data) ? data.toString() : data) + '\n' + err;
