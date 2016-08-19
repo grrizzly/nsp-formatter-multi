@@ -1,10 +1,9 @@
 'use strict';
 
-const table = require('text-table');
 const fs = require('fs');
 const nspDefaultOutput = require('nsp/lib/formatters/default');
 
-const header = ['*Package*', '*Version*', '*FixedIn*', '*Advisory*'];
+const header = ['Package', 'Version', 'FixedIn', 'Advisory'];
 
 module.exports = function(err, data, pkgPath) {
     if (err) {
@@ -21,27 +20,14 @@ module.exports = function(err, data, pkgPath) {
     return nspDefaultOutput(err, data, pkgPath);
 };
 
-function writeFormatted(data) {
-    const tableData = [header];
-    const rows = data.map((advisory) => {
-        return [
-            `*${advisory.module}*`,
-            advisory.vulnerable_versions,
-            advisory.patched_versions,
-            `<${advisory.advisory}|${advisory.id}>`,
-            `\n_${pathBuilder(advisory.path)}_`
-        ];
+function writeFormatted(advisories) {
+    const advisoryStrings = advisories.map(advisory => {
+      const patchedString = advisory.patched_versions ? `* ${advisory.patched_versions}* is patched.` : '';
+      const title = `*<${advisory.advisory}|${advisory.title}>*`;
+      const versions = `${advisory.vulnerable_versions} is vulnerable. ${patchedString}`;
+      return `${title}\n> ${pathBuilder(advisory.path)}\n> ${versions}`;
     });
-
-    const fullTable = tableData.concat(rows);
-    const formattedTable = table(fullTable, {
-        hsep: ' ',
-        stringLength: (string) => {
-            string = string.replace(/\*(\w*)\*/g, '$1');
-            return string.length;
-        }
-    });
-    return fs.writeFileSync('slack-formatted', formattedTable);
+    return fs.writeFileSync('slack-formatted', advisoryStrings.join('\n'));
 }
 
 function writeRaw(data) {
@@ -49,5 +35,14 @@ function writeRaw(data) {
 }
 
 function pathBuilder(path) {
-    return `${path[0]} > (${path.length-2} deps) > ${path[path.length-1]}`
+  // yes 4 is a magic number, as we dont want to hide only 1 dependency).
+  if (path.length > 4) {
+    return `${path[0]} > ${path[1]} > (${path.length-3} deps) > *${path[path.length-1]}*`
+  }
+  return path.reduce((first, second, idx, arry) => {
+    if  (idx === arry.length - 1) {
+      return `${first} > *${second}*`;
+    }
+    return `${first} > ${second}`;
+  });
 }
