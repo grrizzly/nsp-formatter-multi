@@ -33,7 +33,7 @@ function writeRaw(data) {
 }
 
 function pathBuilder(path) {
-  path.unshift(); // remove the first element as that is the source module nsp runs against.
+  path.shift(); // remove the first element as that is the source module nsp runs against.
   if (path.length > 3) {
     return `${path[0]} > (${path.length-2} deps) > *${path[path.length-1]}*`
   }
