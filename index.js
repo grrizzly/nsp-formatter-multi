@@ -33,9 +33,9 @@ function writeRaw(data) {
 }
 
 function pathBuilder(path) {
-  // yes 4 is a magic number, as we dont want to hide only 1 dependency).
-  if (path.length > 4) {
-    return `${path[0]} > ${path[1]} > (${path.length-3} deps) > *${path[path.length-1]}*`
+  path.shift(); // remove the first element as that is the source module nsp runs against.
+  if (path.length > 3) {
+    return `${path[0]} > (${path.length-2} deps) > *${path[path.length-1]}*`
   }
   return path.reduce((first, second, idx, arry) => {
     if  (idx === arry.length - 1) {
