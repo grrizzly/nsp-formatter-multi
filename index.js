@@ -1,22 +1,24 @@
 'use strict';
 
 const fs = require('fs');
-const nspDefaultOutput = require('nsp/lib/formatters/default');
+const nspTableOutput = require('nsp/reporters/table');
 
-module.exports = function(err, data, pkgPath) {
-    if (err) {
-        return 'Debug output: ' + JSON.stringify(Buffer.isBuffer(data) ? data.toString() : data) + '\n' + err;
-    }
+exports.check = {};
+exports.check.error = function (err, args, logger = console) {
+    nspTableOutput.check.error(err, args, logger);
+}
 
+exports.check.success = function (result, args, logger = console) {
+    const { data } = result;
     if (!data.length) {
       fs.writeFileSync('slack-formatted', ':sunny: Zero Known Vulnerabilities Found');
-    }else{
+    } else {
       writeFormatted(data);
     }
-
+    
     writeRaw(data);
-    return nspDefaultOutput(err, data, pkgPath);
-};
+    nspTableOutput.check.success(result, args, logger);
+}
 
 function writeFormatted(advisories) {
     const advisoryStrings = advisories.map(advisory => {
